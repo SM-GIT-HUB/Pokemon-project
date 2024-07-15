@@ -25,6 +25,22 @@ function PokemonList()
         setUrl(nextUrl);
     }
 
+    async function getPrev()
+    {
+        const response = await axios.get(url);
+        console.log(response);
+
+        const prevUrl = response.data.previous;
+
+        // console.log(nextUrl);
+
+        if (prevUrl == null) {
+            return;
+        }
+        
+        setUrl(prevUrl);
+    }
+
     async function downloadPokemons()
     {
         setIsLoading(true);
@@ -48,7 +64,8 @@ function PokemonList()
         // console.log(myResult);
         // console.log(response.data);
 
-        setPokemonList(myResult);
+        // setPokemonList(myResult);
+        setPokemonList([...myResult]);
         setIsLoading(false);
     }
 
@@ -56,18 +73,21 @@ function PokemonList()
         downloadPokemons();
     }, [url])
 
+    const buttonClass = "rounded-[7px] p-[5px_10px] border-[1px] border-black";
+
     return (
         <div className="m-[10px_auto] flex gap-[10px] flex-wrap flex-col items-center justify-center">
             <div>Pokemon list</div>
-            <div className={`grid grid-cols-${isLoading? 1 : 4} md:grid-cols-${isLoading? 1 : 5} gap-[10px] md:gap-[30px] lg:gap-[60px]`}>
+            <div className={`grid ${isLoading? "grid-cols-1" : "grid-cols-4"} ${isLoading? "md:grid-cols-1" : "md:grid-cols-5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}>
+            {/* <div className={`grid grid-cols-${isLoading? "1" : "4"} md:grid-cols-${isLoading? "1" : "5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}> */}
             {
                 isLoading? <div className="font-bold">Loading...</div> :
                 pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id}/>)
             }
             </div>
-            <div>
-                <button>Prev</button>
-                <button className="p-[10px] border-[1px] border-black" onClick={() => getNext()}>Next</button>
+            <div className="flex justify-between w-[300px] md:w-[500px] items-center">
+                <button className={buttonClass} onClick={getPrev} >Prev</button>
+                <button className={buttonClass} onClick={() => getNext()}>Next</button>
             </div>
         </div>
     )
