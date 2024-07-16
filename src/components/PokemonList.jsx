@@ -8,43 +8,19 @@ function PokemonList()
     const [pokemonList, setPokemonList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon/');
-
-    async function getNext()
-    {
-        const response = await axios.get(url);
-        console.log(response);
-
-        const nextUrl = response.data.next;
-
-        // console.log(nextUrl);
-
-        if (nextUrl == null) {
-            return;
-        }
-        
-        setUrl(nextUrl);
-    }
-
-    async function getPrev()
-    {
-        const response = await axios.get(url);
-        console.log(response);
-
-        const prevUrl = response.data.previous;
-
-        // console.log(nextUrl);
-
-        if (prevUrl == null) {
-            return;
-        }
-        
-        setUrl(prevUrl);
-    }
+    const[nextUrl, setNextUrl] = useState("");
+    const[prevUrl, setPrevUrl] = useState("");
 
     async function downloadPokemons()
     {
         setIsLoading(true);
         const response = await axios.get(url);
+
+        setNextUrl(response.data.next);
+        setPrevUrl(response.data.previous);
+
+        // console.log(prevUrl);
+        // console.log(nextUrl);
         
         const pokemonResults = response.data.results;
 
@@ -73,7 +49,7 @@ function PokemonList()
         downloadPokemons();
     }, [url])
 
-    const buttonClass = "rounded-[7px] p-[5px_10px] border-[1px] border-black";
+    const buttonClass = (isDisabled) => `rounded-[5px] p-[5px_0px] w-[75px] ${isDisabled? "bg-[#d4d4d4]" : "bg-[#f94f71] hover:bg-[crimson]"} duration-[0.1s] text-white font-bold`;
 
     return (
         <div className="m-[10px_auto] flex gap-[10px] flex-wrap flex-col items-center justify-center">
@@ -85,9 +61,9 @@ function PokemonList()
                 pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id}/>)
             }
             </div>
-            <div className="flex justify-between w-[300px] md:w-[500px] items-center">
-                <button className={buttonClass} onClick={getPrev} >Prev</button>
-                <button className={buttonClass} onClick={() => getNext()}>Next</button>
+            <div className="flex justify-between w-[300px] md:w-[500px] items-center mt-[15px]">
+                <button disabled={prevUrl == null} className={buttonClass(prevUrl == null)} onClick={() => setUrl(prevUrl)} >Prev</button>
+                <button disabled={nextUrl == null} className={buttonClass(nextUrl == null)} onClick={() => setUrl(nextUrl)}>Next</button>
             </div>
         </div>
     )
