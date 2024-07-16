@@ -54,7 +54,7 @@ function PokemonList()
     return (
         <div className="m-[10px_auto] flex gap-[10px] flex-wrap flex-col items-center justify-center">
             <div>Pokemon list</div>
-            <div className={`grid ${isLoading? "grid-cols-1" : "grid-cols-4"} ${isLoading? "md:grid-cols-1" : "md:grid-cols-5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}>
+            <div className={`grid ${isLoading? "grid-cols-1" : "grid-cols-4"} ${isLoading? "md:grid-cols-1" : "md:grid-cols-5"} gap-[10px] md:gap-[100px]`}>
             {/* <div className={`grid grid-cols-${isLoading? "1" : "4"} md:grid-cols-${isLoading? "1" : "5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}> */}
             {
                 isLoading? <div className="font-bold">Loading...</div> :
