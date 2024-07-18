@@ -48,8 +48,8 @@ function PokemonList()
         <div className="m-[10px_auto] flex gap-[10px] flex-wrap flex-col items-center justify-center">
             <div className="font-bold">Pokemon list</div>
             <div className="flex justify-between w-[300px] md:w-[500px] items-center mt-[15px] mb-[15px]">
-                <button disabled={pokeObj.prevUrl == null} className={buttonClass(pokeObj.prevUrl == null)} onClick={() => setPokeObj((state) => ({...state, url : pokeObj.prevUrl}))} >Prev</button>
-                <button disabled={pokeObj.nextUrl == null} className={buttonClass(pokeObj.nextUrl == null)} onClick={() => setPokeObj((state) => ({...state, url : pokeObj.nextUrl}))}>Next</button>
+                <button disabled={pokeObj.prevUrl == null} className={buttonClass(pokeObj.prevUrl == null)} onClick={() => setPokeObj({...pokeObj, url : pokeObj.prevUrl})} >Prev</button>
+                <button disabled={pokeObj.nextUrl == null} className={buttonClass(pokeObj.nextUrl == null)} onClick={() => setPokeObj({...pokeObj, url : pokeObj.nextUrl})}>Next</button>
             </div>
             <div className={`grid ${pokeObj.isLoading? "grid-cols-1" : "grid-cols-4"} ${pokeObj.isLoading? "md:grid-cols-1" : "md:grid-cols-5"} gap-[10px] md:gap-[100px]`}>
             {/* <div className={`grid grid-cols-${isLoading? "1" : "4"} md:grid-cols-${isLoading? "1" : "5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}> */}
@@ -61,8 +61,8 @@ function PokemonList()
             <div className="flex justify-between w-[300px] md:w-[500px] items-center mt-[15px]">
                 {
                     pokeObj.isLoading? "" : <>
-                        <button disabled={pokeObj.prevUrl == null} className={buttonClass(pokeObj.prevUrl == null)} onClick={() => setPokeObj((state) => ({...state, url : pokeObj.prevUrl}))} >Prev</button>
-                        <button disabled={pokeObj.nextUrl == null} className={buttonClass(pokeObj.nextUrl == null)} onClick={() => setPokeObj((state) => ({...state, url : pokeObj.nextUrl}))}>Next</button>
+                        <button disabled={pokeObj.prevUrl == null} className={buttonClass(pokeObj.prevUrl == null)} onClick={() => setPokeObj({...pokeObj, url : pokeObj.prevUrl})} >Prev</button>
+                        <button disabled={pokeObj.nextUrl == null} className={buttonClass(pokeObj.nextUrl == null)} onClick={() => setPokeObj({...pokeObj, url : pokeObj.nextUrl})}>Next</button>
                     </>
                 }
             </div>
