@@ -26,7 +26,7 @@ function PokemonDetails()
     return (
         <div className="flex items-center justify-around h-[90vh]">
             {
-                loading? <h1 className="font-bold">Loading...</h1> :
+                loading? <div className="loader w-10 h-10 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin"></div> :
                 <>
                 <div className="w-[50%] flex flex-col items-center justify-center font-bold mt-[30px] md:mt-[0px] mb-[20px]">
                     <h1 className="text-[40px] tracking-[5px] mb-[10px] text-[#00539c]">{capi(myPokemon.name)}</h1>

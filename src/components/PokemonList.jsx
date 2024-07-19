@@ -20,7 +20,7 @@ function PokemonList()
             <div className={`grid ${pokeObj.isLoading? "grid-cols-1" : "grid-cols-4"} ${pokeObj.isLoading? "md:grid-cols-1" : "md:grid-cols-5"} gap-[10px] md:gap-[100px]`}>
             {/* <div className={`grid grid-cols-${isLoading? "1" : "4"} md:grid-cols-${isLoading? "1" : "5"} gap-[10px] md:gap-[30px] lg:gap-[60px]`}> */}
             {
-                pokeObj.isLoading? <div className="font-bold">Loading...</div> :
+                pokeObj.isLoading? <div className="loader w-10 h-10 border-4 border-t-4 border-t-blue-500 border-gray-300 rounded-full animate-spin mt-[20px]"></div> :
                 pokeObj.pokemonList.map((p) => <Pokemon name={p.name} image={p.image} key={p.id} id={p.id}/>)
             }
             </div>
