@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Pokemon from "./Pokemon"
+import usePokemonDetails from "../../hooks/usePokemonDetails";
 
 function capi(str)
 {
@@ -15,32 +17,40 @@ function capi(str)
 function PokemonDetails()
 {
     const {id} = useParams();
-    const [myPokemon, setMyPokemon] = useState({});
 
-    async function downloadPokemon()
-    {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const [myPokemon, similarPokemons, loading] = usePokemonDetails(id);
 
-        // console.log(response.data.types);
-        setMyPokemon({
-            name: response.data.name,
-            height : response.data.height,
-            weight : response.data.weight,
-            image : response.data.sprites.other.dream_world.front_default,
-            type : response.data.types.map((t) => t.type.name),
-        })
-    }
+    // console.log(similarPokemons);
 
-    useEffect(() => {downloadPokemon()}, []);
 
     return (
-        <div className="flex flex-col items-center justify-center font-bold mt-[30px] md:mt-[0px]">
-            <h1 className="text-[40px] tracking-[5px] mb-[10px] text-[#00539c]">{capi(myPokemon.name)}</h1>
-            <img src={myPokemon.image} className="w-[350px] h-[400px] md:h-[380px] mb-[15px]" alt="" />
-            <h1>Height: {myPokemon.height}</h1>
-            <h1 className="m-[10px]">Weight: {myPokemon.weight}</h1>
-            <div className="flex gap-[5px]">{ myPokemon.type && myPokemon.type.map((name) => <h1 className="bg-[#04ff0075] p-[5px_10px] rounded-[4px]" key={name}> {capi(name)} </h1>)} </div>
+        <div className="flex items-center justify-around h-[90vh]">
+            {
+                loading? <h1 className="font-bold">Loading...</h1> :
+                <>
+                <div className="w-[50%] flex flex-col items-center justify-center font-bold mt-[30px] md:mt-[0px] mb-[20px]">
+                    <h1 className="text-[40px] tracking-[5px] mb-[10px] text-[#00539c]">{capi(myPokemon.name)}</h1>
+                    <img src={myPokemon.image} className="w-[350px] h-[400px] md:h-[380px] mb-[15px]" alt="" />
+                    <h1>Height: {myPokemon.height}</h1>
+                    <h1 className="m-[10px]">Weight: {myPokemon.weight}</h1>
+                    <div className="flex gap-[5px]">{ myPokemon.type && myPokemon.type.map((name) => <h1 className="bg-[#04ff0075] p-[5px_10px] rounded-[4px]" key={name}> {capi(name)} </h1>)} </div>
+                </div>
+
+                <div className="w-[50%] flex flex-col items-center gap-[20px] md:gap-[30px]">
+                    <h1 className="text-[20px] md:text-[30px] font-bold mt-[10px] text-[#217704ad]">
+                        Similar Pokemons
+                    </h1>
+                    <div className="h-[510px] md:h-[500px] overflow-scroll grid grid-cols-2 md:grid-cols-3 gap-[10px] md:gap-[50px]">
+                        {
+                            similarPokemons.map((p, ind) => <Pokemon name={p.name} image={p.image} key={ind} id={p.id}/>)
+                        }
+                    </div>
+                </div>
+            </>
+            }
+
         </div>
+
     )
 }
 
