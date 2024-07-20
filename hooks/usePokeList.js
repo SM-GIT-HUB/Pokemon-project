@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useEffect, useState, useCallback } from "react";
+import axios from "axios";
 
 function usePokeList()
 {
@@ -11,7 +11,7 @@ function usePokeList()
         prevUrl : ""
     })
 
-    async function downloadPokemons()
+    const downloadPokemons = useCallback(async () =>
     {
         setPokeObj((state) => ({...state, isLoading : true}));
         const response = await axios.get(pokeObj.url);
@@ -34,11 +34,11 @@ function usePokeList()
         });
 
         setPokeObj((state) => ({...state, pokemonList : [...myResult], isLoading : false}));
-    }
+    }, [pokeObj.url]);
 
     useEffect(() => {
         downloadPokemons();
-    }, [pokeObj.url])
+    }, [downloadPokemons])
 
     return [pokeObj, setPokeObj];
 }

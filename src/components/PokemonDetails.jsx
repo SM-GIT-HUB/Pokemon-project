@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -14,11 +15,11 @@ function capi(str)
     return str[0].toUpperCase() + str.slice(1);
 }
 
-function PokemonDetails()
+function PokemonDetails({ name })
 {
     const {id} = useParams();
 
-    const [myPokemon, similarPokemons, loading] = usePokemonDetails(id);
+    const [myPokemon, similarPokemons, loading] = usePokemonDetails(id, name);
 
     // console.log(similarPokemons);
 
