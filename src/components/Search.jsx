@@ -5,7 +5,7 @@ import useDebounce from "../../hooks/useDebounce"
 
 function Search({ setSearchTerm })
 {
-    const debouncedCallback = useDebounce((e) => setSearchTerm(e.target.value));
+    const debouncedCallback = useDebounce((e) => setSearchTerm(e.target.value.toLowerCase()));
 
     return (
         <div>
